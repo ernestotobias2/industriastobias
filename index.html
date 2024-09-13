@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Industrias Tobias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            animation: scaleAnimation 3s infinite;
+        }
+
+        .logo-container img {
+            max-width: 120px;
+        }
+
+        .company-name, .company-tagline {
+            font-size: 28px;
+            color: #4a6a41;
+            font-weight: 700;
+            margin-bottom: 10px;
+            animation: slideIn 1s ease-out;
+        }
+
+        .company-tagline {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            animation: slideIn 1.2s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .password-container, .username-container {
+            position: relative;
+        }
+
+        .password-container input, .username-container input {
+            width: calc(100% - 40px);
+            padding-right: 40px;
+        }
+
+        .toggle-password, .toggle-username {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            text-align: center;
+        }
+
+        @keyframes scaleAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="logo2.png" alt="Logo">
+        </div>
+        <div class="company-name">INDUSTRIAS TOBIAS</div>
+        <div class="company-tagline">A FAMILY COMPANY</div>
+        <form id="loginForm" action="menu-principal.html" method="get">
+            <div class="form-group username-container">
+                <label for="username">ID:</label>
+                <input type="text" id="username" name="username" required>
+                <span class="toggle-username" onclick="toggleUsername()">😊</span> <!-- Emoji para mostrar -->
+                <span class="toggle-username" style="display:none;" onclick="toggleUsername()">😞</span> <!-- Emoji para ocultar -->
+            </div>
+            <div class="form-group password-container">
+                <label for="password">CLAVE:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">😊</span> <!-- Emoji para mostrar -->
+                <span class="toggle-password" style="display:none;" onclick="togglePassword()">😞</span> <!-- Emoji para ocultar -->
+            </div>
+            <button type="submit" class="btn">GO</button>
+            <p id="error" class="error"></p>
+        </form>
+        <div id="loading" class="loading">
+            Cargando...
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var error = document.getElementById('error');
+            var loading = document.getElementById('loading');
+            
+            if ((username === '2005' && password === '2024') || (username === 'tobias' && password === '2024')) {
+                event.preventDefault();
+                error.textContent = '';
+                loading.style.display = 'block'; // Mostrar la animación de carga
+                setTimeout(function() {
+                    var users = JSON.parse(localStorage.getItem('loginHistory')) || [];
+                    var now = new Date().toLocaleString();
+                    users.push({ username: username, loginTime: now });
+                    localStorage.setItem('loginHistory', JSON.stringify(users));
+                    window.location.href = 'menu-principal.html'; // Redirigir después de la animación
+                }, 5000); // Duración de la animación
+            } else {
+                event.preventDefault();
+                error.textContent = 'ID o clave incorrectos.';
+            }
+        });
+
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var showPassword = document.querySelector('.toggle-password:nth-of-type(1)');
+            var hidePassword = document.querySelector('.toggle-password:nth-of-type(2)');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                showPassword.style.display = 'none';
+                hidePassword.style.display = 'inline';
+            } else {
+                passwordInput.type = 'password';
+                showPassword.style.display = 'inline';
+                hidePassword.style.display = 'none';
+            }
+        }
+
+        function toggleUsername() {
+            var usernameInput = document.getElementById('username');
+            var showUsername = document.querySelector('.toggle-username:nth-of-type(1)');
+            var hideUsername = document.querySelector('.toggle-username:nth-of-type(2)');
+            
+            if (usernameInput.type === 'text') {
+                usernameInput.type = 'password'; // Ajustar tipo según necesidades
+                showUsername.style.display = 'none';
+                hideUsername.style.display = 'inline';
+            } else {
+                usernameInput.type = 'text'; // Ajustar tipo según necesidades
+                showUsername.style.display = 'inline';
+                hideUsername.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

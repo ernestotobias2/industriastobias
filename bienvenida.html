@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida - Industrias Tobias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #F8F5F3; /* Fondo actualizado */
+            color: #4a6a41; /* Verde oliva */
+            font-family: Arial, sans-serif; /* Fuente Arial */
+            overflow: hidden;
+            text-align: center; /* Centrar texto */
+        }
+
+        .welcome-container {
+            position: relative;
+            margin-top: 20px; /* Mover el contenedor un poco hacia abajo */
+        }
+
+        .welcome-container img {
+            width: 400px; /* Ajusta el tamaño del logo según sea necesario */
+            margin-bottom: 20px; /* Espacio entre el logo y el título */
+            animation: logoSlideIn 1.5s ease-out forwards; /* Animación de entrada */
+        }
+
+        .welcome-container h1,
+        .welcome-container p {
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+            font-family: Arial, sans-serif; /* Mismo estilo de fuente */
+            color: #4a6a41; /* Verde oliva */
+        }
+
+        .welcome-container h1 {
+            font-size: 48px; /* Tamaño grande */
+            font-weight: 700;
+            animation-delay: 0.5s; /* Retraso para la animación */
+        }
+
+        .welcome-container p {
+            font-size: 24px; /* Tamaño más pequeño */
+            font-weight: 400;
+            animation-delay: 1s; /* Retraso para la animación */
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 40px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-message {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d; /* Gris oscuro */
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes logoSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8); /* Comienza arriba y pequeño */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1); /* Llega a su posición original y tamaño normal */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <img src="logo.png" alt="Logo de Industrias Tobias"> <!-- Logo aquí con animación -->
+        <h1>WELCOME TO TOBIAS INDUSTRIES</h1>
+        <p>A FAMILY COMPANY</p>
+        <button class="btn" onclick="continuar()">Continuar</button>
+    </div>
+    <div class="footer-message">
+        Desde 2024, Todos los Derechos Reservados
+    </div>
+    <script>
+        function continuar() {
+            window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
+        }
+    </script>
+</body>
+</html>

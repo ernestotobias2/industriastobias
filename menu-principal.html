@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Industrias Tobias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4a6d49;
+            font-size: 36px;
+            margin-bottom: 20px;
+            animation: fadeIn 3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item {
+            background-color: #4a6d49;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item:hover {
+            background-color: #3a5b3b;
+            transform: translateY(-5px);
+        }
+
+        .logout {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 14px;
+            color: #4a6d49;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logout:hover {
+            color: #3a5b3b;
+            text-decoration: underline;
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4a6d49;
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            background-color: #3a5b3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>INDUSTRIAS TOBIAS</h1>
+        <a href="index.html" class="logout">Cerrar Sesión</a>
+        <div class="menu">
+            <a href="pagina-inventario.html" class="menu-item">Inventario</a>
+            <a href="#" class="menu-item">Compras</a>
+            <a href="#" class="menu-item">Ventas</a>
+            <a href="#" class="menu-item">Facturas</a>
+            <a href="#" class="menu-item">Envíos</a>
+            <a href="#" class="menu-item">Cuentas</a>
+            <a href="#" class="menu-item">Saldo</a>
+            <a href="lista-usuarios.html" class="menu-item">Lista</a>
+        </div>
+    </div>
+    <a href="index.html" class="back-to-home">Volver al Inicio</a>
+</body>
+</html>
