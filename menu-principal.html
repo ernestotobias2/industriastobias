@@ -13,30 +13,47 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #e9ecef;
+            background-color: #f2f2f2;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
+            animation: backgroundFade 3s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFade {
+            0% { background-color: #f2f2f2; }
+            50% { background-color: #e0e0e0; }
+            100% { background-color: #f2f2f2; }
         }
 
         .container {
             width: 90%;
             max-width: 800px;
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             text-align: center;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
             color: #4a6d49;
-            font-size: 36px;
+            font-size: 32px;
             margin-bottom: 20px;
-            animation: fadeIn 3s ease-out;
+            animation: fadeIn 2s ease-out;
         }
 
         @keyframes fadeIn {
@@ -52,81 +69,83 @@
 
         .menu {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .menu-item {
             background-color: #4a6d49;
             color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 6px;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 120px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 100px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .menu-item:hover {
             background-color: #3a5b3b;
-            transform: translateY(-5px);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .logout {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+            display: block;
+            margin: 15px 0;
             font-size: 14px;
             color: #4a6d49;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .logout:hover {
             color: #3a5b3b;
             text-decoration: underline;
+            transform: scale(1.1);
         }
 
         .back-to-home {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            padding: 10px 20px;
+            display: block;
+            margin-top: 20px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             background-color: #4a6d49;
             color: #ffffff;
-            font-size: 16px;
+            font-size: 14px;
             text-decoration: none;
             text-align: center;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .back-to-home:hover {
             background-color: #3a5b3b;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>INDUSTRIAS TOBIAS</h1>
-        <a href="index.html" class="logout">Cerrar Sesión</a>
+        <a href="cerrar-sesion.html" class="logout">Cerrar Sesión</a>
         <div class="menu">
             <a href="pagina-inventario.html" class="menu-item">Inventario</a>
-            <a href="#" class="menu-item">Compras</a>
-            <a href="#" class="menu-item">Ventas</a>
-            <a href="#" class="menu-item">Facturas</a>
-            <a href="#" class="menu-item">Envíos</a>
-            <a href="#" class="menu-item">Cuentas</a>
-            <a href="#" class="menu-item">Saldo</a>
+            <a href="pagina-compras.html" class="menu-item">Compras</a>
+            <a href="pagina-ventas.html" class="menu-item">Ventas</a>
+            <a href="pagina-facturas.html" class="menu-item">Facturas</a>
+            <a href="pagina-envios.html" class="menu-item">Envíos</a>
+            <a href="pagina-cuentas.html" class="menu-item">Cuentas</a>
+            <a href="pagina-saldo.html" class="menu-item">Saldo</a>
             <a href="lista-usuarios.html" class="menu-item">Lista</a>
         </div>
+        <a href="bienvenida.html" class="back-to-home">Volver al Inicio</a>
     </div>
-    <a href="index.html" class="back-to-home">Volver al Inicio</a>
 </body>
 </html>

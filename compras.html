@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras - Industrias Tobias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4a6d49;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3a5b3b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4a6d49;
+            color: #ffffff;
+        }
+
+        .total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .back-to-menu {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: #4a6d49;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-menu:hover {
+            background-color: #3a5b3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Compras</h1>
+        <div class="form-group">
+            <label for="nombre">Nombre del Producto</label>
+            <input type="text" id="nombre" placeholder="Ingrese el nombre del producto">
+        </div>
+        <div class="form-group">
+            <label for="codigo">Código del Producto</label>
+            <input type="text" id="codigo" placeholder="Ingrese el código del producto">
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio Unitario</label>
+            <input type="number" id="precio" placeholder="Ingrese el precio unitario" step="0.01">
+        </div>
+        <button onclick="registrarCompra()">Registrar Compra</button>
+
+        <h2>Lista de Compras</h2>
+        <table id="compras">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Código</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="total" id="total">Total: $0.00</div>
+
+        <a href="menu-principal.html" class="back-to-menu">Volver al Menú Principal</a>
+    </div>
+
+    <script>
+        function registrarCompra() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const codigo = document.getElementById('codigo').value.trim();
+            const precio = parseFloat(document.getElementById('precio').value);
+
+            if (nombre && codigo && !isNaN(precio) && precio >= 0) {
+                const compra = { nombre, codigo, precio };
+
+                // Obtener compras actuales
+                let compras = JSON.parse(localStorage.getItem('compras')) || [];
+                // Añadir nueva compra
+                compras.push(compra);
+                // Guardar en localStorage
+                localStorage.setItem('compras', JSON.stringify(compras));
+
+                // Actualizar la lista de compras y el total
+                actualizarListaCompras();
+                calcularTotal();
+
+                // Limpiar los campos del formulario
+                document.getElementById('nombre').value = '';
+                document.getElementById('codigo').value = '';
+                document.getElementById('precio').value = '';
+            } else {
+                alert('Por favor, complete todos los campos correctamente.');
+            }
+        }
+
+        function actualizarListaCompras() {
+            const tbody = document.querySelector('#compras tbody');
+            tbody.innerHTML = '';
+            const compras = JSON.parse(localStorage.getItem('compras')) || [];
+            
+            compras.forEach(compra => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${compra.nombre}</td>
+                    <td>${compra.codigo}</td>
+                    <td>$${compra.precio.toFixed(2)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function calcularTotal() {
+            const compras = JSON.parse(localStorage.getItem('compras')) || [];
+            const total = compras.reduce((acc, compra) => acc + compra.precio, 0);
+            document.getElementById('total').textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarListaCompras();
+            calcularTotal();
+        });
+    </script>
+</body>
+</html>

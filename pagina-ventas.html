@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas - Industrias Tobias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f7f7f7;
+            color: #555;
+            font-size: 16px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 8px;
+            background-color: #6c757d;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #5a6268;
+        }
+
+        .back-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .total {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .button-delete {
+            background-color: #d9534f;
+        }
+
+        .button-delete:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ventas</h1>
+        <table id="salesTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Código</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los productos vendidos se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
+        <div class="total" id="totalAmount">TOTAL VENDIDO: $0.00</div>
+        <div class="back-buttons">
+            <a href="pagina-compras.html" class="button">Ir a Compras</a>
+            <a href="pagina-inventario.html" class="button">Ir a Inventario</a>
+            <a href="menu-principal.html" class="button">Volver al Menú Principal</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const salesTableBody = document.querySelector('#salesTable tbody');
+            const totalAmount = document.getElementById('totalAmount');
+
+            function renderTable() {
+                const sales = JSON.parse(localStorage.getItem('sales')) || [];
+                salesTableBody.innerHTML = '';
+                let total = 0;
+
+                sales.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${item.code}</td>
+                        <td>${parseFloat(item.price).toFixed(2)}</td>
+                        <td>
+                            <button class="button button-delete" data-code="${item.code}">Eliminar</button>
+                        </td>
+                    `;
+                    salesTableBody.appendChild(row);
+                    total += parseFloat(item.price);
+                });
+
+                totalAmount.textContent = `TOTAL VENDIDO: $${total.toFixed(2)}`;
+            }
+
+            salesTableBody.addEventListener('click', function(event) {
+                const code = event.target.getAttribute('data-code');
+                if (event.target.classList.contains('button-delete')) {
+                    let sales = JSON.parse(localStorage.getItem('sales')) || [];
+                    sales = sales.filter(item => item.code !== code);
+                    localStorage.setItem('sales', JSON.stringify(sales));
+                    renderTable();
+                }
+            });
+
+            renderTable();
+        });
+    </script>
+</body>
+</html>

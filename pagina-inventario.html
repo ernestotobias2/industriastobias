@@ -5,281 +5,229 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario - Industrias Tobias</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffffff; /* Fondo blanco */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
         }
 
         .container {
-            width: 100%;
-            max-width: 900px;
-            background-color: #ffffff; /* Fondo blanco */
-            color: #4a6d49; /* Verde oliva para el texto */
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            position: relative;
+            width: 80%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
         }
 
         h1 {
-            color: #4a6d49; /* Verde oliva */
-            font-size: 32px;
+            color: #333;
+            font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
         }
 
-        .total {
-            font-size: 18px;
-            color: #4a6d49; /* Verde oliva */
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .search-group {
+        .search-container {
             margin-bottom: 20px;
             text-align: center;
         }
 
-        .search-group input {
-            width: 80%;
-            padding: 10px;
-            border-radius: 8px;
+        .search-container input {
+            padding: 8px;
             border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 14px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #4a6d49; /* Verde oliva */
-        }
-
-        .form-group input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .product-list {
-            margin-top: 20px;
-        }
-
-        .product-list table {
+        table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
 
-        .product-list th, .product-list td {
-            padding: 10px;
-            border: 1px solid #ddd;
+        th, td {
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
-        .product-list th {
-            background-color: #4a6d49; /* Verde oliva */
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-size: 14px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        .button {
+            padding: 8px 16px;
+            border-radius: 4px;
             color: #ffffff;
-        }
-
-        .product-list td {
-            background-color: #f9f9f9; /* Fondo claro para las celdas */
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4a6d49; /* Verde oliva */
-            color: #ffffff;
-            font-size: 16px;
-            cursor: pointer;
             text-decoration: none;
+            font-size: 14px;
             text-align: center;
             transition: background-color 0.3s ease;
         }
 
-        .btn:hover {
-            background-color: #3c5e40; /* Verde oliva más oscuro */
+        .button-sold {
+            background-color: #28a745;
         }
 
-        .btn-small {
-            font-size: 14px;
-            padding: 5px 10px;
+        .button-sold:hover {
+            background-color: #218838;
         }
 
-        .edit-btn, .delete-btn {
-            background-color: #007bff; /* Azul */
+        .button-delete {
+            background-color: #dc3545;
+        }
+
+        .button-delete:hover {
+            background-color: #c82333;
+        }
+
+        .total {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+            color: #333;
+        }
+
+        .back-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #6c757d;
             color: #ffffff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .edit-btn:hover, .delete-btn:hover {
-            background-color: #0056b3; /* Azul oscuro */
-        }
-
-        .back-to-menu {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 14px;
-            color: #4a6d49; /* Verde oliva */
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
         }
 
-        .back-to-menu:hover {
-            color: #3c5e40; /* Verde oliva más oscuro */
-            text-decoration: underline;
+        .back-buttons a:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Inventario</h1>
-        <div class="total">
-            Total: $<span id="total-amount">0.00</span>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre o código...">
         </div>
-        <div class="search-group">
-            <input type="text" id="search-input" placeholder="Buscar productos...">
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Código</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los productos del inventario se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
+        <div class="total" id="totalAmount">Total: $0.00</div>
+        <div class="back-buttons">
+            <a href="pagina-compras.html" class="button">Ir a Compras</a>
+            <a href="pagina-ventas.html" class="button">Ir a Ventas</a>
+            <a href="menu-principal.html" class="button">Volver al Menú Principal</a>
         </div>
-        <form id="inventory-form">
-            <div class="form-group">
-                <label for="product-name">Nombre:</label>
-                <input type="text" id="product-name" name="product-name">
-            </div>
-            <div class="form-group">
-                <label for="product-code">Código:</label>
-                <input type="text" id="product-code" name="product-code">
-            </div>
-            <div class="form-group">
-                <label for="product-price">Precio:</label>
-                <input type="number" id="product-price" name="product-price" step="0.01">
-            </div>
-            <button type="submit" class="btn">Guardar</button>
-        </form>
-        <div class="product-list">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Código</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="product-list-body">
-                    <!-- Los productos se añadirán aquí -->
-                </tbody>
-            </table>
-        </div>
-        <a href="menu-principal.html" class="back-to-menu">Volver al Menú Principal</a>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var productListBody = document.getElementById('product-list-body');
-            var totalAmount = document.getElementById('total-amount');
-            var products = JSON.parse(localStorage.getItem('products')) || [];
+            const inventoryTableBody = document.querySelector('#inventoryTable tbody');
+            const totalAmount = document.getElementById('totalAmount');
+            const searchInput = document.getElementById('searchInput');
 
-            function renderProducts() {
-                productListBody.innerHTML = '';
-                products.forEach(function(product, index) {
-                    var row = productListBody.insertRow();
-                    row.insertCell().textContent = index + 1; // Numeración de productos
-                    row.insertCell().textContent = product.name;
-                    row.insertCell().textContent = product.code;
-                    row.insertCell().textContent = '$' + product.price.toFixed(2);
-                    
-                    var actionsCell = row.insertCell();
-                    actionsCell.innerHTML = `
-                        <button class="edit-btn" data-code="${product.code}">Editar</button>
-                        <button class="delete-btn" data-code="${product.code}">Eliminar</button>
+            function renderTable() {
+                const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+                const purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+                const allItems = [...inventory, ...purchases];
+                inventoryTableBody.innerHTML = '';
+                let total = 0;
+
+                allItems.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${item.code}</td>
+                        <td>${parseFloat(item.price).toFixed(2)}</td>
+                        <td>
+                            <button class="button button-sold" data-code="${item.code}">Vendido</button>
+                            <button class="button button-delete" data-code="${item.code}">Eliminar</button>
+                        </td>
                     `;
+                    inventoryTableBody.appendChild(row);
+                    total += parseFloat(item.price);
                 });
-                updateTotal();
+
+                totalAmount.textContent = `Total: $${total.toFixed(2)}`;
             }
 
-            function updateTotal() {
-                var total = products.reduce((sum, product) => sum + product.price, 0);
-                totalAmount.textContent = total.toFixed(2);
-            }
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const rows = inventoryTableBody.querySelectorAll('tr');
 
-            document.getElementById('inventory-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                var name = document.getElementById('product-name').value;
-                var code = document.getElementById('product-code').value;
-                var price = parseFloat(document.getElementById('product-price').value);
-
-                if (name && code && !isNaN(price)) {
-                    var existingProduct = products.find(p => p.code === code);
-                    if (existingProduct) {
-                        existingProduct.name = name;
-                        existingProduct.price = price;
-                    } else {
-                        products.push({ name, code, price });
-                    }
-                    
-                    localStorage.setItem('products', JSON.stringify(products));
-                    renderProducts();
-                    document.getElementById('inventory-form').reset();
-                }
-            });
-
-            productListBody.addEventListener('click', function(e) {
-                if (e.target.classList.contains('edit-btn')) {
-                    var code = e.target.getAttribute('data-code');
-                    var product = products.find(p => p.code === code);
-                    if (product) {
-                        document.getElementById('product-name').value = product.name;
-                        document.getElementById('product-code').value = product.code;
-                        document.getElementById('product-price').value = product.price;
-                    }
-                } else if (e.target.classList.contains('delete-btn')) {
-                    var code = e.target.getAttribute('data-code');
-                    products = products.filter(p => p.code !== code);
-                    localStorage.setItem('products', JSON.stringify(products));
-                    renderProducts();
-                }
-            });
-
-            document.getElementById('search-input').addEventListener('input', function(e) {
-                var searchText = e.target.value.toLowerCase();
-                var rows = productListBody.querySelectorAll('tr');
                 rows.forEach(row => {
-                    var name = row.cells[1].textContent.toLowerCase();
-                    var code = row.cells[2].textContent.toLowerCase();
-                    if (name.includes(searchText) || code.includes(searchText)) {
+                    const cells = row.querySelectorAll('td');
+                    const name = cells[0].textContent.toLowerCase();
+                    const code = cells[1].textContent.toLowerCase();
+
+                    if (name.includes(searchTerm) || code.includes(searchTerm)) {
                         row.style.display = '';
                     } else {
                         row.style.display = 'none';
                     }
                 });
+            }
+
+            inventoryTableBody.addEventListener('click', function(event) {
+                const code = event.target.getAttribute('data-code');
+                if (event.target.classList.contains('button-sold')) {
+                    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+                    let sales = JSON.parse(localStorage.getItem('sales')) || [];
+                    let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+
+                    const item = [...inventory, ...purchases].find(item => item.code === code);
+                    if (item) {
+                        sales.push(item);
+                        localStorage.setItem('sales', JSON.stringify(sales));
+                        inventory = inventory.filter(item => item.code !== code);
+                        purchases = purchases.filter(item => item.code !== code);
+                        localStorage.setItem('inventory', JSON.stringify(inventory));
+                        localStorage.setItem('purchases', JSON.stringify(purchases));
+                        renderTable();
+                    }
+                } else if (event.target.classList.contains('button-delete')) {
+                    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+                    let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+
+                    inventory = inventory.filter(item => item.code !== code);
+                    purchases = purchases.filter(item => item.code !== code);
+
+                    localStorage.setItem('inventory', JSON.stringify(inventory));
+                    localStorage.setItem('purchases', JSON.stringify(purchases));
+                    renderTable();
+                }
             });
 
-            renderProducts();
+            searchInput.addEventListener('input', filterTable);
+
+            renderTable();
         });
     </script>
 </body>

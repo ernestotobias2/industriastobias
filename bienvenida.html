@@ -16,22 +16,21 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #F8F5F3; /* Fondo actualizado */
-            color: #4a6a41; /* Verde oliva */
-            font-family: Arial, sans-serif; /* Fuente Arial */
+            background-color: #F8F5F3; /* Fondo original */
+            color: #4a6a41; /* Verde oliva original */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
             overflow: hidden;
             text-align: center; /* Centrar texto */
         }
 
         .welcome-container {
             position: relative;
-            margin-top: 20px; /* Mover el contenedor un poco hacia abajo */
         }
 
         .welcome-container img {
-            width: 400px; /* Ajusta el tamaño del logo según sea necesario */
+            width: 400px; /* Tamaño original del logo */
             margin-bottom: 20px; /* Espacio entre el logo y el título */
-            animation: logoSlideIn 1.5s ease-out forwards; /* Animación de entrada */
+            animation: logoGlow 3s infinite, logoBounce 2s ease-out; /* Animaciones del logo */
         }
 
         .welcome-container h1,
@@ -39,20 +38,19 @@
             margin: 0;
             padding: 0;
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s forwards;
-            font-family: Arial, sans-serif; /* Mismo estilo de fuente */
-            color: #4a6a41; /* Verde oliva */
+            animation: textPopIn 1s ease-out forwards, textSlideUp 1s ease-out forwards;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Mismo estilo de fuente */
+            color: #4a6a41; /* Verde oliva original */
         }
 
         .welcome-container h1 {
-            font-size: 48px; /* Tamaño grande */
-            font-weight: 700;
+            font-size: 60px; /* Tamaño grande */
+            font-weight: 900;
             animation-delay: 0.5s; /* Retraso para la animación */
         }
 
         .welcome-container p {
-            font-size: 24px; /* Tamaño más pequeño */
+            font-size: 28px; /* Tamaño más pequeño */
             font-weight: 400;
             animation-delay: 1s; /* Retraso para la animación */
             margin-top: 20px;
@@ -60,12 +58,12 @@
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             background-color: #007bff;
             color: #ffffff;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             text-decoration: none;
             text-align: center;
@@ -82,29 +80,51 @@
             bottom: 20px;
             width: 100%;
             text-align: center;
-            font-size: 14px;
+            font-size: 16px;
             color: #6c757d; /* Gris oscuro */
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        @keyframes logoGlow {
+            0% {
+                text-shadow: 0 0 10px #007bff;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            50% {
+                text-shadow: 0 0 20px #007bff;
+            }
+            100% {
+                text-shadow: 0 0 10px #007bff;
             }
         }
 
-        @keyframes logoSlideIn {
+        @keyframes logoBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes textPopIn {
             from {
+                transform: scale(0.5);
                 opacity: 0;
-                transform: translateY(-50px) scale(0.8); /* Comienza arriba y pequeño */
             }
             to {
+                transform: scale(1);
                 opacity: 1;
-                transform: translateY(0) scale(1); /* Llega a su posición original y tamaño normal */
+            }
+        }
+
+        @keyframes textSlideUp {
+            from {
+                transform: translateY(50px);
+            }
+            to {
+                transform: translateY(0);
             }
         }
     </style>
@@ -123,6 +143,13 @@
         function continuar() {
             window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
         }
+
+        // Bloquear la navegación hacia atrás del navegador
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        window.history.pushState(null, null, window.location.href);
     </script>
 </body>
 </html>

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Usuarios - Industrias Tobias</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #e9ecef;
@@ -12,48 +18,82 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            overflow: auto; /* Permitir desplazamiento de la ventana del navegador si es necesario */
         }
+
         .container {
             width: 90%;
-            max-width: 800px;
+            max-width: 1000px;
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            position: relative;
             text-align: center;
+            max-height: 80vh; /* Altura máxima del contenedor */
+            overflow-y: auto; /* Permitir desplazamiento vertical */
         }
+
         h1 {
             color: #4a6d49;
+            font-size: 36px;
             margin-bottom: 20px;
         }
-        table {
+
+        .user-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin: 20px 0;
         }
-        table, th, td {
+
+        .user-table th, .user-table td {
             border: 1px solid #ddd;
+            padding: 8px;
         }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
+
+        .user-table th {
             background-color: #4a6d49;
-            color: #ffffff;
+            color: white;
         }
-        .back-to-menu {
-            display: inline-block;
+
+        .user-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .user-table tr.selected {
+            background-color: #d1ffd1;
+        }
+
+        .user-table button {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            background-color: #dc3545;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .user-table button:hover {
+            background-color: #c82333;
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
             padding: 10px 20px;
+            border: none;
             border-radius: 8px;
             background-color: #4a6d49;
             color: #ffffff;
             font-size: 16px;
             text-decoration: none;
+            text-align: center;
             transition: background-color 0.3s ease;
         }
-        .back-to-menu:hover {
+
+        .back-to-home:hover {
             background-color: #3a5b3b;
         }
     </style>
@@ -61,34 +101,55 @@
 <body>
     <div class="container">
         <h1>Lista de Usuarios</h1>
-        <table id="usersTable">
+        <table class="user-table">
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Nombre</th>
                     <th>Fecha y Hora de Inicio de Sesión</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="userTableBody">
+                <!-- Aquí se llenarán los datos de los usuarios -->
             </tbody>
         </table>
-        <a href="menu-principal.html" class="back-to-menu">Volver al Menú Principal</a>
     </div>
+    <a href="menu-principal.html" class="back-to-home">Volver al Inicio</a>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var users = JSON.parse(localStorage.getItem('loginHistory')) || [];
-            var tableBody = document.querySelector('#usersTable tbody');
-            
-            users.forEach(function(user, index) {
-                var row = document.createElement('tr');
-                var idCell = document.createElement('td');
-                var dateTimeCell = document.createElement('td');
-                
-                idCell.textContent = user.username;
-                dateTimeCell.textContent = user.loginTime;
-                
-                row.appendChild(idCell);
-                row.appendChild(dateTimeCell);
-                tableBody.appendChild(row);
+            const userTableBody = document.getElementById('userTableBody');
+            const loginHistory = JSON.parse(localStorage.getItem('loginHistory')) || [];
+
+            // Llenar tabla con los usuarios de localStorage
+            loginHistory.forEach((login, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${login.username}</td>
+                    <td>${login.loginTime}</td>
+                    <td>
+                        <button onclick="deleteUser(this)">Eliminar</button>
+                    </td>
+                `;
+                userTableBody.appendChild(row);
+            });
+
+            // Función para eliminar directamente la fila al hacer clic en el botón de eliminar dentro de la fila
+            window.deleteUser = function(button) {
+                const row = button.closest('tr');
+                row.remove();
+                // Aquí deberías agregar lógica para eliminar el usuario del almacenamiento si es necesario
+            };
+
+            // Selección de fila en la tabla
+            document.querySelectorAll('.user-table tr').forEach(function(row) {
+                row.addEventListener('click', function() {
+                    // Deseleccionar cualquier fila previamente seleccionada
+                    document.querySelectorAll('.user-table tr').forEach(r => r.classList.remove('selected'));
+                    // Seleccionar la fila actual
+                    this.classList.add('selected');
+                });
             });
         });
     </script>
